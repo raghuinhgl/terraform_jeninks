@@ -1,9 +1,42 @@
-resource "aws_instance" "test123" {
-  ami = "ami-0b614a5d911900a9b"
-  instance_type = "t2.micro"
+provider "aws" {
+  region     = var.region
+  access_key = "AKIA5RJJCDGQZB3WGEPV"
+  secret_key = "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"
+}
 
+resource "aws_security_group" "Ec2_public_security_group" {
+  name        = "ec2-public-sg"
+  description = "instance reaching access for ec2 intances"
+  vpc_id      = "vpc-021ae043a26c13bfc"
 
-tags= {
-    Name="my-test-jenkins"
-      }
+  ingress {
+    from_port   = 8080
+    protocol    = "TCP"
+    to_port     = 8080
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    protocol    = "TCP"
+    to_port     = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+resource "aws_instance" "jenkinsec2" {
+  instance_type   = var.instance_type
+  ami             = var.ami_id
+  key_name        = "jenkins_key"
+  security_groups = ["${aws_security_group.Ec2_public_security_group.name}"]
+  
+  tags = {
+    Name = "Auto-jenkin"
+  }
 }
