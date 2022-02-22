@@ -32,7 +32,7 @@ resource "aws_instance" "jenkinsec2" {
   instance_type   = var.instance_type
   ami             = var.ami_id
   key_name        = "jenkins_key"
-  security_groups = ["${aws_security_group.Ec2_public_security_group.name}"]
+  security_groups = ["${aws_security_group.Ec2_public_security_group1.name}"]
   
   tags = {
     Name = "Auto-jenkin"
