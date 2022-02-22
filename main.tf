@@ -1,11 +1,9 @@
 provider "aws" {
   region     = var.region
-  access_key = "AKIA5RJJCDGQZB3WGEPV"
-  secret_key = "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"
-}
+  }
 
-resource "aws_security_group" "Ec2_public_security_group" {
-  name        = "ec2-public-sg"
+resource "aws_security_group" "Ec2_public_security_group1" {
+  name        = "ec2-public-sg1"
   description = "instance reaching access for ec2 intances"
   vpc_id      = "vpc-021ae043a26c13bfc"
 
